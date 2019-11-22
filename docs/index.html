@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+    <script src="phaser.min.js"></script>
+
+    <title>TrainVoluted</title>
+</head>
+
+<body>
+    
+    <h1 id="top">TrainVoluted</h1>
+    <div class="btn-group">
+            <button onclick="window.location.href = '#section1'">Sobre TrainVoluted</button>
+            <button onclick="window.location.href = '#section2'">Cómo jugar</button>
+            <button onclick="window.location.href = '#section3'">Jugar</button>
+    </div>
+
+    <button onclick="window.location.href = '#top'" id="myBtn" title="Go to top">▲</button>
+
+    <h2 id="section1">Sobre TrainVoluted</h2>
+    <p>
+        <img src="/img/nokia.png" id="nokia"><b>TrainVoluted</b> mezcla elementos típicos del género Arcade de Snake con elementos de Gestión de Recursos/Puzzle. Al contrario que en otros juegos<br> del género Snake, en TrainVoluted el jugador deberá guiar un tren,<br> equivalente a la serpiente en otros juegos, hacia sus pasajeros colocando raíles para formar una vía, en lugar de controlar a la serpiente directamente.
+    </p>
+    <p>
+    <img src="/img/trainsnake.png" id="trainSnake"> <img src="/img/traincity.png" id="trainCity"><br><br> En este juego se premia la habilidad mecánica del jugador para mover los <b>raíles</b> y la capacidad de gestionar bajo presión el uso de estos, pues se debe tener en cuenta el aumento de <b>velocidad</b> progresiva del tren al recoger a los <b>pasajeros</b>, el número de raíles del que se dispone tanto en el <b>inventario</b> como colocados en el mapa, el aumento de <b>vagones</b> que dificultan el espacio de movimiento para el tren, los <b>obstáculos</b> del propio mapa y el objetivo principal, los pasajeros que se deben recoger en el trayecto para aumentar la <b>puntuación.</b>
+    </p>
+
+
+
+
+    <h2 id="section2">Cómo jugar</h2>
+    <p>
+    El juego se controla a través del <p1><b>ratón</b></p1> del ordenador, <p1><b>haciendo click</b></p1> en los raíles y <p1><b>colocándolos</b></p1> donde el jugador crea conveniente en el mapa (Siempre que ese lugar esté vacío). A la <p1><b>derecha</b></p1>  de la pantalla se encontrará una <p1><b>ventana</b></p1>  en la que se mostrará el <p1><b>inventario</b></p1>, con los distintos tipos de <p1><b>raíles</b></p1> y su <p1><b>contador</b></p1>. Una vez en partida, en la parte <p1><b>superior izquierda</b></p1> de la pantalla se mostrará la <p1><b>puntuación</b></p1> actual del jugador.
+    <br><b><u>Movimiento:</u></b><br> 
+      El tren conseguirá <p1><b>moverse</b></p1> gracias a los raíles que el jugador debe <p1><b>colocar </b></p1>en el mapa, a su vez, podrá <p1><b>quitar</b></p1> raíles ya colocados para <p1><b>reutilizarlos</b></p1> una vez el tren haya pasado por los mismos.
+            
+    <br><b><u>Inventario:</u></b><br>
+      El inventario cuenta con un <p1><b>contador</b></p1> de raíles y con los <p1><b>raíles</b></p1> de cada dirección. Cada vez que se <p1><b>saque</b></p1> un raíl del tipo que sea, el contador disminuirá <p1><b>limitando</b></p1> el número de raíles que se pueden sacar del inventario. El jugador obtendrá los raíles del <p1><b>inventario</b></p1>, desde donde los <p1><b>arrastrará</b></p1> para colocarlos en el mapa. También tendrá la opción de <p1><b>guardar</b></p1> raíles del mapa en el inventario, aumentando así el contador de raíles del inventario.
+            
+    <br><b><u>Recogida:</u></b><br>
+       El <p1><b>tren</b></p1> deberá pasar por encima de los <p1><b>pasajeros</b></p1> para conseguir <p1><b>puntuar</b></p1> y aumentar el <p1><b>contador</b></p1> de raíles del inventario, los <p1><b>paquetes</b></p1> que contienen <p1><b>raíles puente</b></p1> se recogen de la misma forma. Los pasajeros también <p1><b>aumentan</b></p1> el número de vagones del tren, es decir, su <p1><b>longitud</b></p1>.
+            
+    <br><b><u>Vida:</u></b><br> 
+       Si el tren llega a tocar una <p1><b>zona</b></p1> del mapa <p1><b>sin raíl</b></p1> (descarrilamiento) o su <p1><b>trayectoria</b></p1> es interrumpida por un <p1><b>obstáculo</b></p1> (choque), el juego termina.
+
+    </p>
+
+    <div class="main" id="section3">
+            <script type="module">
+                import Game from './game.js';
+        
+                var config = {
+                    type: Phaser.AUTO,
+                    width: 1400,
+                    height: 800,
+                    pixelArt: true,
+                    input: {
+                        gamepad: true
+                    },
+                    scale: {
+                        mode: Phaser.Scale.FIT,
+                        autoCenter: Phaser.Scale.CENTER_BOTH
+                    },
+                    scene: [ Game ],
+                    physics: { default: 'arcade', arcade: { gravity: { y: 0 }, debug: true } }
+                };
+                new Phaser.Game(config);
+            </script>
+            </div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-image: url('/img/background.png');
+  background-size: cover;
+}
+
+h1 {
+  background-image: url('/img/trainheader.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: contain;
+  color: rgb(187, 2, 2);
+  text-align: center;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 1000%;
+  margin-top: auto;
+  margin-bottom: auto;
+}
+h2{
+  background-color: rgb(17, 59, 59);
+  border: 4px solid black;
+  border-radius: 10px;
+  color: orange;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 500%;
+  text-align: center;
+  margin: 1%;
+}
+p {
+  background-color: rgb(17, 59, 59);
+  border: 4px solid black;
+  border-radius: 10px;
+  color: orange;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 200%;
+  text-align: center;
+  margin: 1%;
+} 
+
+p1 {
+  background-color: rgb(17, 59, 59);
+  border-radius: 10px;
+  color: yellow;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 100%;
+  text-align: center;
+}
+
+.btn-group button {
+  background-color: rgb(17, 59, 59); /* Green background */
+  border: 5px solid rgb(0, 0, 0); /* Green border */
+  color: rgb(255, 4, 4); /* White text */
+  padding: 0.5% 2%; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  float: left; /* Float the buttons side by side */
+  font-size: 3em;
+  border-radius: 5px;
+}
+
+.btn-group button:not(:last-child) {
+  border-right: none; /* Prevent double borders */
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Add a background color on hover */
+.btn-group button:hover {
+  background-color: #3e8e41;
+  color: white;
+}
+
+#myBtn {
+  position: fixed; /* Fixed/sticky position */
+  bottom: 2%; /* Place the button at the bottom of the page */
+  right: 1%; /* Place the button 30px from the right */
+  z-index: 99; /* Make sure it does not overlap */
+  border-color: black;
+  outline: none; /* Remove outline */
+  background-color: red; /* Set a background color */
+  color: black; /* Text color */
+  cursor: pointer; /* Add a mouse pointer on hover */
+  padding: 0.75%; /* Some padding */
+  border-radius: 20px; /* Rounded corners */
+  font-size: 2em; /* Increase font size */
+}
+
+#myBtn:hover {
+  background-color: #555; /* Add a dark-grey background on hover */
+}
+#nokia{
+  float:right;
+  width:25%;
+  height:auto; 
+  margin-right: auto;
+  border-radius: 5px;
+}
+#trainSnake{
+  width:37%;
+  height:auto;
+  border-radius:10px;
+}
+#trainCity{
+  width: 29%;
+  height: auto;
+   margin-left:2%;
+   border-radius:10px;
+}
