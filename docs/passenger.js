@@ -11,21 +11,5 @@ export default class Passenger extends Phaser.Physics.Arcade.Sprite{
         this.row = row;
         this.setDepth(1);
     }
-    
-    preUpdate(){
-        this.column = Math.floor(this.x / 50);
-        this.row = Math.floor(this.y / 50);
-    }
 
-    ReturnTile()
-    {
-        let tile = {column: this.column, row: this.row}
-        return tile;
-    }
-
-    MoveToTile(tile)
-    {
-        this.x = tile.column * 50 + 25;
-        this.y = tile.row * 50 + 25;
-    }
 }
