@@ -9,6 +9,7 @@ export default class Rail extends Phaser.GameObjects.Sprite
         scene.add.existing(this).setInteractive();
         scene.physics.add.existing(this);
         scene.input.setDraggable(this);
+        this.setDepth(1);
         this.on('dragstart', function (pointer, gameObject, dragX, dragY) {
           scene.dragObject.play();
           if(this.railType<4){

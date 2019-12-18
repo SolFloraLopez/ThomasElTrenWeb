@@ -16,7 +16,7 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
         this.angle = this.direction * 90;
         this.speed = speed;
         this.state = stateEnum.ONTRACK;
-        this.setDepth(2);
+        this.setDepth(3);
     }
 
     preUpdate(time,delta)

@@ -8,7 +8,7 @@ export default class Collectible extends Phaser.Physics.Arcade.Sprite{
         this.body.setSize(10,10);
         this.column = column;
         this.row = row;
-        this.setDepth(1);
+        this.setDepth(2);
     }
 
 }

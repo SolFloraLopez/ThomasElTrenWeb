@@ -20,7 +20,7 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         this.row = Math.floor(this.y / 50);
         // this.direction = direction;
         // this.angle = this.direction * 90;
-        this.setDepth(1);
+        this.setDepth(3);
         for (var i = 0; i <= this.spacer; i++)
         {
           this.wagonPath[i] = new Phaser.Geom.Point(this.target.x, this.target.y);

@@ -10,6 +10,7 @@ export default class Water extends Phaser.Physics.Arcade.Sprite{
         this.column = column;
         this.row = row;
         this.avoidable = false;
+        this.setDepth(0);
 
     }
     SetAvoidable(bool)
