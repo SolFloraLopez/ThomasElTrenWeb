@@ -28,7 +28,7 @@ export default class Game extends Phaser.Scene {
 
     this.train;
     this.wagonsArray = [];
-    this.wagonSpacer = 100;
+    this.wagonSpacer = 300;
     this.minSpacer = 30;
     this.aestheticRails = [];
   }
