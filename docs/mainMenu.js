@@ -63,7 +63,7 @@ export default class MainMenu extends Phaser.Scene {
     playButton.on('pointerup',()=>{
       console.log(this.levelSelected);
       if(!this.credits.visible)this.buttonSound.play();
-      if(this.levelSelected!=0){
+      if(this.levelSelected!=0 && !this.credits.visible){
         this.scene.add('main',new Game(this.levelSelected));
         this.scene.start('main');
       }
@@ -106,7 +106,6 @@ export default class MainMenu extends Phaser.Scene {
       this.credits.visible = false;
       menuButton.visible = false;
     });
-
   }
   LockLevel(level){
     this.levelSelected = level;
