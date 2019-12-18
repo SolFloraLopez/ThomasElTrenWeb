@@ -11,9 +11,7 @@ export default class Rail extends Phaser.GameObjects.Sprite
         scene.input.setDraggable(this);
         this.on('dragstart', function (pointer, gameObject, dragX, dragY) {
           if(this.railType<4){
-            console.log("sdadas"+inventory.GetRailCounter('A'));
-            console.log(this.column);
-            console.log(this.row);
+            
             if(inventory.GetRailCounter('A')>0 || (inventory.GetRailCounter('A')===0 && (this.column!=24 || this.row!=8))){
 
               this.body.enable = false;
@@ -49,23 +47,34 @@ export default class Rail extends Phaser.GameObjects.Sprite
           this.on('dragend', function (pointer, gameObject, dragX, dragY) {
             this.body.enable = true;
             this.rotatable = false;
-            if(this.column>22){
+            
+            let overlapTemp = this.scene.physics.add.overlap(this,scene.backgroundLayer,(o1, o2) => {
+              if(o2.properties.collides) this.MoveToInventory(inventory);
+              overlapTemp.destroy();
+            });
+            let overlapTemp2 = this.scene.physics.add.overlap(this,scene.waterGroup,(o1, o2) => {
+              if(this.railType<4) this.MoveToInventory(inventory);
+              overlapTemp2.destroy();
+            });
 
-              if(this.railType<4){
-                inventory.ModifyRailCounter(1,'A');
-                this.column = 24;
-                this.railType = 0;
-              }
-              else if (this.railType>=4){
-                inventory.ModifyRailCounter(1,'B');
-                this.column = 26;
-                this.railType = 4;
-              }
-              this.row = 8;
-              this.x = (this.column * this.tileSize) + this.tileSize / 2;
-              this.y = (this.row * this.tileSize) + this.tileSize / 2;
-              this.angle = 0;
-            }
+            // if(this.column>22){
+            //   this.MoveToInventory(inventory);
+            // }
+            if(this.railType>=4){
+              let pointerC = Math.floor((pointer.x/50));
+              let pointerR = Math.floor((pointer.y/50))
+              let pointerPos = {column: pointerC,row: pointerR};
+              let objectReturned = scene.SearchWater(pointerPos);
+             if(objectReturned.found && !objectReturned.water.avoidable) objectReturned.water.SetAvoidable(true);
+           }
+            // this.scene.physics.overlap(this,scene.backgroundLayer,(o1, o2) => {
+            //   console.log(o1.column);
+            //   console.log(o2);
+            //   //buscar el tile de background layer que coincida con la posicion de o1, y desactivar su colision
+            //   console.log("s");
+            //   console.log(this.scene.backgroundLayer);
+            //   o2.setCollision(false);
+            // });
             
         });
         this.on('pointerdown', ()=>{
@@ -77,6 +86,8 @@ export default class Rail extends Phaser.GameObjects.Sprite
           }
           scene.CreateRail();
         });
+
+
         this.tileSize = tileSize;
         this.column = column;
         this.row = row;
@@ -152,5 +163,21 @@ export default class Rail extends Phaser.GameObjects.Sprite
     ChangeState(state) 
     {
         this.state = state;
+    }
+    MoveToInventory(inventory){
+      if(this.railType<4){
+        inventory.ModifyRailCounter(1,'A');
+        this.column = 24;
+        this.railType = 0;
+      }
+      else if (this.railType>=4){
+        inventory.ModifyRailCounter(1,'B');
+        this.column = 26;
+        this.railType = 4;
+      }
+      this.row = 8;
+      this.x = (this.column * this.tileSize) + this.tileSize / 2;
+      this.y = (this.row * this.tileSize) + this.tileSize / 2;
+      this.angle = 0;
     }
 }

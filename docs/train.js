@@ -7,7 +7,7 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
         super(scene, x, y, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
-        this.setCollideWorldBounds(true)
+        this.setCollideWorldBounds(false);
         this.body.setSize(40,40);
 
         this.column = Math.floor(this.x / 50);
@@ -16,7 +16,7 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
         this.angle = this.direction * 90;
         this.speed = speed;
         this.state = stateEnum.ONTRACK;
-        this.setDepth(1);
+        this.setDepth(2);
     }
 
     preUpdate(time,delta)
@@ -85,7 +85,23 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
     ChangeDirection(direction)
     {
         this.direction = direction;
-        this.angle = this.direction * 90;
+        
+
+        switch(direction)
+        {
+            case directionEnum.UP:
+                this.angle = 180;
+                break;
+            case directionEnum.DOWN:
+                this.angle = 0;
+                break;
+            case directionEnum.RIGHT:
+                this.angle = 270;
+                break;
+            case directionEnum.LEFT:
+                this.angle = 90;
+                break;
+        }
     }
 
     ReturnPos()
