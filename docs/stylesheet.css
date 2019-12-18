@@ -3,12 +3,12 @@ html {
 }
 
 body {
-  background-image: url('/img/background.png');
+  background-image: url('img/background.png');
   background-size: cover;
 }
 
 h1 {
-  background-image: url('/img/trainheader.jpg');
+  background-image: url('img/trainheader.jpg');
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: contain;
