@@ -1,5 +1,4 @@
- import {directionEnum, matrixEnum} from './Enums.js'
-
+//Clase para objetos recogibles del juego
 export default class Collectible extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, column, row, texture)
     {
