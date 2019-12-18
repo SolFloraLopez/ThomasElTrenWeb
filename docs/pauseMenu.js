@@ -23,6 +23,7 @@ export default class PauseMenu extends Phaser.Scene {
     menuButton.setInteractive();
 
     resumeButton.on('pointerup',()=>{
+      
       this.scene.resume('main');
       this.scene.stop(this);
     });

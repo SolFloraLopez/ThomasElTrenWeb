@@ -28,7 +28,7 @@ export default class Game extends Phaser.Scene {
 
     this.train;
     this.wagonsArray = [];
-    this.wagonSpacer = 300;
+    this.wagonSpacer = 160;
     this.minSpacer = 30;
     this.aestheticRails = [];
   }
@@ -52,8 +52,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('watersprite', 'img/water.png', { frameWidth: 50, frameHeight: 50 })
 
     this.load.image('curvedrailsprite', 'img/curvedrail.png', {frameWidth: 32, frameHeight: 32})
-
-    this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
+    
     this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
   }
 
@@ -96,8 +95,10 @@ export default class Game extends Phaser.Scene {
     //crea las entidades (los pasajeros seran un array tambien)
     this.passenger = new Collectible(this, 11, 9, 'passengersprite');
 
-    this.buttonSound = this.sound.add('button');
-    this.music = this.sound.add('music', {volume: 0.2}, {loop: true});
+    this.music = this.sound.add('music');
+
+    this.music.loop = true;
+    this.music.setVolume(0.2);
     //Crea agua en el mapa
     for(let i=0;i<WATER_SLOTS;i++) this.createWater();
     //Inicia el tren
