@@ -53,8 +53,8 @@ export default class Game extends Phaser.Scene {
 
     this.load.image('curvedrailsprite', 'img/curvedrail.png', {frameWidth: 32, frameHeight: 32})
 
-    this.load.audio('button', ['/soundFiles/buttonSound.mp3', '/soundFiles/buttonSound.ogg']);
-
+    this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
+    this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
   }
 
   create()
@@ -97,7 +97,7 @@ export default class Game extends Phaser.Scene {
     this.passenger = new Collectible(this, 11, 9, 'passengersprite');
 
     this.buttonSound = this.sound.add('button');
-
+    this.music = this.sound.add('music', {volume: 0.2}, {loop: true});
     //Crea agua en el mapa
     for(let i=0;i<WATER_SLOTS;i++) this.createWater();
     //Inicia el tren
@@ -205,6 +205,8 @@ export default class Game extends Phaser.Scene {
       this.railsGroup.add(this.railPool[i]);
 
     }
+
+    this.music.play();
 
   }
   update()
@@ -387,6 +389,7 @@ export default class Game extends Phaser.Scene {
 
   }
   EndGame(){
+    this.music.stop();
     this.scene.pause(this);
     let endScene = this.scene.get('end');
     if(endScene===null){
