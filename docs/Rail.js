@@ -10,6 +10,7 @@ export default class Rail extends Phaser.GameObjects.Sprite
         scene.physics.add.existing(this);
         scene.input.setDraggable(this);
         this.on('dragstart', function (pointer, gameObject, dragX, dragY) {
+          scene.dragObject.play();
           if(this.railType<4){
             
             if(inventory.GetRailCounter('A')>0 || (inventory.GetRailCounter('A')===0 && (this.column!=24 || this.row!=8))){
@@ -45,6 +46,7 @@ export default class Rail extends Phaser.GameObjects.Sprite
 
           });
           this.on('dragend', function (pointer, gameObject, dragX, dragY) {
+            scene.dropObject.play();
             this.body.enable = true;
             this.rotatable = false;
             
@@ -134,6 +136,7 @@ export default class Rail extends Phaser.GameObjects.Sprite
             {
                 if(Phaser.Input.Keyboard.JustDown(this.scene.r))
                 {
+                  this.scene.rotateObject.play();
                     this.angle += 90;
                 
                     if (this.railType <= 3) this.railType = (this.railType + 1) % 4;

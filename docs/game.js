@@ -54,6 +54,12 @@ export default class Game extends Phaser.Scene {
     this.load.image('watersprite', 'img/water.png', { frameWidth: 50, frameHeight: 50 });
     
     this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
+    this.load.audio('crashSound', ['soundFiles/crashSound.mp3', 'soundFiles/crashSound.ogg']);
+    this.load.audio('dragObject', ['soundFiles/dragObject.mp3', 'soundFiles/dragObject.ogg']);
+    this.load.audio('dropObject', ['soundFiles/dropObject.mp3', 'soundFiles/dropObject.ogg']);
+    this.load.audio('pickBox', ['soundFiles/pickBox.mp3', 'soundFiles/pickBox.ogg']);
+    this.load.audio('pickPassenger', ['soundFiles/pickPassenger.mp3', 'soundFiles/pickPassenger.ogg']);
+    this.load.audio('rotateObject', ['soundFiles/rotateObject.mp3', 'soundFiles/rotateObject.ogg']);
   }
 
   create()
@@ -117,6 +123,7 @@ export default class Game extends Phaser.Scene {
 
     //creacion de colisiones entre entidades, y callbacks
     this.physics.add.collider(this.train, this.passengersGroup, (o1, o2) => {
+      this.pickPassenger.play()
       o2.destroy();
       this.changeWagonSpacer();
       this.createWagon();
@@ -124,7 +131,10 @@ export default class Game extends Phaser.Scene {
 
       //probabilidad de que al recoger un pasajero, aparezca un paquete
       let rnd = Math.round(Math.random() * 10);
-      if(rnd>=7) this.createBox();
+      if(rnd>=7)
+      {
+        this.createBox();
+      } 
       //probabilidad de que al recoger un pasajero, se añada un raíl curvo al inventario
       rnd = Math.round(Math.random() * 10);
       if(rnd<=7) this.inventory.ModifyRailCounter(1, 'A');
@@ -136,6 +146,7 @@ export default class Game extends Phaser.Scene {
     });
 
     this.physics.add.collider(this.train, this.boxsGroup, (o1, o2) => {
+      this.pickBox.play();
       o2.destroy();
       //probabilidad de que al recoger una caja, se añada un raíl puente al inventario o se añadan 10 puntos al marcador
       let rnd = Math.round(Math.random() * 10);
@@ -201,6 +212,12 @@ export default class Game extends Phaser.Scene {
 
 
     this.music = this.sound.add('music');
+    this.crashSound = this.sound.add('crashSound');
+    this.dragObject = this.sound.add('dragObject');
+    this.dropObject = this.sound.add('dropObject');
+    this.pickBox = this.sound.add('pickBox');
+    this.pickPassenger = this.sound.add('pickPassenger');
+    this.rotateObject = this.sound.add('rotateObject');
 
     this.music.loop = true;
     this.music.setVolume(0.2);
@@ -376,6 +393,7 @@ export default class Game extends Phaser.Scene {
 
   }
   EndGame(){
+    this.crashSound.play();
     this.music.stop();
     this.scene.pause(this);
     let endScene = this.scene.get('end');
