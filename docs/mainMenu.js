@@ -27,6 +27,9 @@ export default class MainMenu extends Phaser.Scene {
     this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
     this.load.audio('buttonHover', ['soundFiles/buttonHoverSound.mp3', 'soundFiles/buttonHoverSound.ogg']);
     this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
+    this.load.audio('music1', ['soundFiles/music1.mp3', 'soundFiles/music1.ogg']);
+    this.load.audio('music2', ['soundFiles/music2.mp3', 'soundFiles/music2.ogg']);
+    this.load.audio('music3', ['soundFiles/music3.mp3', 'soundFiles/music3.ogg']);
   }
 
   create()
@@ -39,7 +42,7 @@ export default class MainMenu extends Phaser.Scene {
     let framW = this.add.image(130,310,'fW').setOrigin(0);
     this.lock = this.add.image(130,310,'lock').setOrigin(0);
     this.credits = this.add.image(0,0,'credits').setOrigin(0);
-    this.credits.setDepth(1);
+    this.credits.setDepth(2);
     this.credits.visible = false;
     this.credits.setActive(false);
     this.lock.visible = false;
@@ -59,11 +62,9 @@ export default class MainMenu extends Phaser.Scene {
     let soundBtn =  this.add.image(250,650,'soundOnBtn').setOrigin(0);
     this.add.image(250,650,'soundOffBtn').setOrigin(0);
 
-
-
-    
     menuButton.visible = false;
-    menuButton.setDepth(1);
+
+    menuButton.setDepth(2);
     if(this.sound.mute) soundBtn.setDepth(-1);
     else soundBtn.setDepth(1);
     musicBtn.setDepth(-1);
@@ -137,6 +138,7 @@ export default class MainMenu extends Phaser.Scene {
       }
     });
     soundBtn.on('pointerup',()=>{
+      this.sound.play('button');
       if (!this.sound.mute){
         this.sound.setMute(true);
         soundBtn.setDepth(-1);

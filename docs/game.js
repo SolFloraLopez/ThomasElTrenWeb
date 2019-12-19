@@ -63,6 +63,11 @@ export default class Game extends Phaser.Scene {
 
   create()
   {
+    this.music = this.sound.add('music'+this.level);
+    this.music.setLoop(true);
+    this.music.setVolume(0.2);
+    this.music.play();
+    console.log(this.music);
     //INPUTS de teclado
     this.r = this.input.keyboard.addKey('R');
     this.esc = this.input.keyboard.addKey('ESC');
@@ -384,6 +389,15 @@ export default class Game extends Phaser.Scene {
       this.scene.add('end',new EndMenu(this.score));
       this.scene.launch('end');
     }
+  }
+  MuteMusic(bool){
+    this.music.setMute(bool);
+  }
+  MuteSound(bool){
+    this.sound.setMute(bool);
+  }
+  DestroyMusic(){
+    this.music.destroy();
   }
 
 }
