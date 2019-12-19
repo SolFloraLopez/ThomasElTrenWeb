@@ -44,24 +44,30 @@ export default class MainMenu extends Phaser.Scene {
     this.credits.setActive(false);
     this.lock.visible = false;
     this.levelSelected=0;
-    this.sound.stopAll();
 
     this.music = this.sound.add('music');
-
-    this.music.loop = true;
+    this.music.setLoop(true);
     this.music.setVolume(0.2);
-
     this.music.play();
-
 
 
     let playButton = this.add.image(420,640,'playBtn').setOrigin(0);
     let infoButton = this.add.image(1030,640,'infoBtn').setOrigin(0);
     let menuButton = this.add.image(415,580,'menuBtn').setOrigin(0);
-    let musicBtn =  this.add.image(100,650,'musicOnBtn').setOrigin(0);
+    let musicBtn =  this.add.image(100,650,'musicOffBtn').setOrigin(0);
+    this.add.image(100,650,'musicOnBtn').setOrigin(0);
     let soundBtn =  this.add.image(250,650,'soundOnBtn').setOrigin(0);
+    this.add.image(250,650,'soundOffBtn').setOrigin(0);
+
+
+
+    
     menuButton.visible = false;
     menuButton.setDepth(1);
+    if(this.sound.mute) soundBtn.setDepth(-1);
+    else soundBtn.setDepth(1);
+    musicBtn.setDepth(-1);
+
 
     this.playLockedBtn = this.add.image(420,640,'playlockedBtn').setOrigin(0);
     playButton.setInteractive();
@@ -74,9 +80,9 @@ export default class MainMenu extends Phaser.Scene {
     soundBtn.setInteractive();
 
     playButton.on('pointerup',()=>{
-      console.log(this.levelSelected);
       if(!this.credits.visible)this.sound.play('button');
       if(this.levelSelected!=0 && !this.credits.visible){
+        this.music.destroy();
         this.scene.add('main',new Game(this.levelSelected));
         this.scene.start('main');
       }
@@ -110,7 +116,7 @@ export default class MainMenu extends Phaser.Scene {
       this.LockLevel(3);
     });
     infoButton.on('pointerup',()=>{
-      this.sound.play('button');
+      if(!this.credits.visible)this.sound.play('button');
       this.credits.visible = true;
       menuButton.visible = true;
     });
@@ -121,10 +127,27 @@ export default class MainMenu extends Phaser.Scene {
     });
     musicBtn.on('pointerup',()=>{
       this.sound.play('button');
-      if(this.music.mute) this.musicBtn.
-      this.music.mute == !this.music.mute;
+      if (!this.music.mute){
+        this.music.setMute(true);
+        musicBtn.setDepth(1);
+      }
+      else{
+        this.music.setMute(false);
+        musicBtn.setDepth(-1);
+      }
+    });
+    soundBtn.on('pointerup',()=>{
+      if (!this.sound.mute){
+        this.sound.setMute(true);
+        soundBtn.setDepth(-1);
+      }
+      else{
+        this.sound.setMute(false);
+        soundBtn.setDepth(1);
+      }
     });
   }
+
   LockLevel(level){
     this.levelSelected = level;
     this.lock.visible = true;

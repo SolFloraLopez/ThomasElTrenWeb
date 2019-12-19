@@ -66,7 +66,6 @@ export default class Game extends Phaser.Scene {
     //INPUTS de teclado
     this.r = this.input.keyboard.addKey('R');
     this.esc = this.input.keyboard.addKey('ESC');
-
     //creación de mapa con tilemap
     this.map = this.make.tilemap({
       key: 'tilemap'+this.level,
