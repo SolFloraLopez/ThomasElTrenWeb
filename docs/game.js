@@ -123,7 +123,7 @@ export default class Game extends Phaser.Scene {
 
     //creacion de colisiones entre entidades, y callbacks
     this.physics.add.collider(this.train, this.passengersGroup, (o1, o2) => {
-      this.pickPassenger.play()
+      this.sound.play('pickPassenger');
       o2.destroy();
       this.changeWagonSpacer();
       this.createWagon();
@@ -146,7 +146,7 @@ export default class Game extends Phaser.Scene {
     });
 
     this.physics.add.collider(this.train, this.boxsGroup, (o1, o2) => {
-      this.pickBox.play();
+      this.sound.play('pickBox');
       o2.destroy();
       //probabilidad de que al recoger una caja, se añada un raíl puente al inventario o se añadan 10 puntos al marcador
       let rnd = Math.round(Math.random() * 10);
@@ -212,12 +212,6 @@ export default class Game extends Phaser.Scene {
 
 
     this.music = this.sound.add('music');
-    this.crashSound = this.sound.add('crashSound');
-    this.dragObject = this.sound.add('dragObject');
-    this.dropObject = this.sound.add('dropObject');
-    this.pickBox = this.sound.add('pickBox');
-    this.pickPassenger = this.sound.add('pickPassenger');
-    this.rotateObject = this.sound.add('rotateObject');
 
     this.music.loop = true;
     this.music.setVolume(0.2);
@@ -393,7 +387,7 @@ export default class Game extends Phaser.Scene {
 
   }
   EndGame(){
-    this.crashSound.play();
+    this.sound.play('crashSound');
     this.music.stop();
     this.scene.pause(this);
     let endScene = this.scene.get('end');
