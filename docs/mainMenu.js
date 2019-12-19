@@ -19,9 +19,14 @@ export default class MainMenu extends Phaser.Scene {
     this.load.image('level3', 'img/desertLevel.png');
     this.load.image('lock', 'img/lock.png');
     this.load.image('credits', 'img/credits.png');
+    this.load.image('musicOffBtn', 'img/musicOffBtn.png');
+    this.load.image('musicOnBtn', 'img/musicOnBtn.png');
+    this.load.image('soundOffBtn', 'img/soundOffBtn.png');
+    this.load.image('soundOnBtn', 'img/soundOnBtn.png');
     
     this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
     this.load.audio('buttonHover', ['soundFiles/buttonHoverSound.mp3', 'soundFiles/buttonHoverSound.ogg']);
+    this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
   }
 
   create()
@@ -41,11 +46,20 @@ export default class MainMenu extends Phaser.Scene {
     this.levelSelected=0;
     this.sound.stopAll();
 
+    this.music = this.sound.add('music');
+
+    this.music.loop = true;
+    this.music.setVolume(0.2);
+
+    this.music.play();
+
 
 
     let playButton = this.add.image(420,640,'playBtn').setOrigin(0);
     let infoButton = this.add.image(1030,640,'infoBtn').setOrigin(0);
     let menuButton = this.add.image(415,580,'menuBtn').setOrigin(0);
+    let musicBtn =  this.add.image(100,650,'musicOnBtn').setOrigin(0);
+    let soundBtn =  this.add.image(250,650,'soundOnBtn').setOrigin(0);
     menuButton.visible = false;
     menuButton.setDepth(1);
 
@@ -56,6 +70,8 @@ export default class MainMenu extends Phaser.Scene {
     lvl3Btn.setInteractive();
     infoButton.setInteractive();
     menuButton.setInteractive();
+    musicBtn.setInteractive();
+    soundBtn.setInteractive();
 
     playButton.on('pointerup',()=>{
       console.log(this.levelSelected);
@@ -102,6 +118,11 @@ export default class MainMenu extends Phaser.Scene {
       this.sound.play('button');
       this.credits.visible = false;
       menuButton.visible = false;
+    });
+    musicBtn.on('pointerup',()=>{
+      this.sound.play('button');
+      if(this.music.mute) this.musicBtn.
+      this.music.mute == !this.music.mute;
     });
   }
   LockLevel(level){

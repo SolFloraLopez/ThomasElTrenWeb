@@ -53,7 +53,6 @@ export default class Game extends Phaser.Scene {
     this.load.image('boxsprite', 'img/box.png', { frameWidth: 50, frameHeight: 50 });
     this.load.image('watersprite', 'img/water.png', { frameWidth: 50, frameHeight: 50 });
     
-    this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
     this.load.audio('crashSound', ['soundFiles/crashSound.mp3', 'soundFiles/crashSound.ogg']);
     this.load.audio('dragObject', ['soundFiles/dragObject.mp3', 'soundFiles/dragObject.ogg']);
     this.load.audio('dropObject', ['soundFiles/dropObject.mp3', 'soundFiles/dropObject.ogg']);
@@ -209,15 +208,6 @@ export default class Game extends Phaser.Scene {
       this.scene.launch('pause');
       this.scene.pause(this);
     });
-
-
-    this.music = this.sound.add('music');
-
-    this.music.loop = true;
-    this.music.setVolume(0.2);
-
-    this.music.play();
-
   }
   update()
   {
