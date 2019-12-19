@@ -42,9 +42,7 @@ export default class MainMenu extends Phaser.Scene {
     let framW = this.add.image(130,310,'fW').setOrigin(0);
     this.lock = this.add.image(130,310,'lock').setOrigin(0);
     this.credits = this.add.image(0,0,'credits').setOrigin(0);
-    this.credits.setDepth(2);
-    this.credits.visible = false;
-    this.credits.setActive(false);
+
     this.lock.visible = false;
     this.levelSelected=0;
 
@@ -55,6 +53,7 @@ export default class MainMenu extends Phaser.Scene {
 
 
     let playButton = this.add.image(420,640,'playBtn').setOrigin(0);
+    this.playLockedBtn = this.add.image(420,640,'playlockedBtn').setOrigin(0);
     let infoButton = this.add.image(1030,640,'infoBtn').setOrigin(0);
     let menuButton = this.add.image(415,580,'menuBtn').setOrigin(0);
     let musicBtn =  this.add.image(100,650,'musicOffBtn').setOrigin(0);
@@ -64,13 +63,15 @@ export default class MainMenu extends Phaser.Scene {
 
     menuButton.visible = false;
 
+    this.credits.setDepth(2);
     menuButton.setDepth(2);
     if(this.sound.mute) soundBtn.setDepth(-1);
     else soundBtn.setDepth(1);
     musicBtn.setDepth(-1);
 
 
-    this.playLockedBtn = this.add.image(420,640,'playlockedBtn').setOrigin(0);
+    this.credits.setVisible(false);
+    this.credits.setInteractive();
     playButton.setInteractive();
     lvl1Btn.setInteractive();
     lvl2Btn.setInteractive();
@@ -81,7 +82,7 @@ export default class MainMenu extends Phaser.Scene {
     soundBtn.setInteractive();
 
     playButton.on('pointerup',()=>{
-      if(!this.credits.visible)this.sound.play('button');
+      this.sound.play('button');
       if(this.levelSelected!=0 && !this.credits.visible){
         this.music.destroy();
         this.scene.add('main',new Game(this.levelSelected));
@@ -90,41 +91,41 @@ export default class MainMenu extends Phaser.Scene {
     });
     lvl1Btn.on('pointerover',()=>{
       framW.setPosition(lvl1Btn.x,lvl1Btn.y);
-      if(!this.credits.visible) this.sound.play('buttonHover');
+      this.sound.play('buttonHover');
     });
     lvl2Btn.on('pointerover',()=>{
       framW.setPosition(lvl2Btn.x,lvl2Btn.y);
-      if(!this.credits.visible) this.sound.play('buttonHover');
+      this.sound.play('buttonHover');
     });
     lvl3Btn.on('pointerover',()=>{
       framW.setPosition(lvl3Btn.x,lvl3Btn.y);
-      if(!this.credits.visible) this.sound.play('buttonHover');
+      this.sound.play('buttonHover');
     });
 
     lvl1Btn.on('pointerup',()=>{
       this.lock.setPosition(lvl1Btn.x,lvl1Btn.y);
-      if(!this.credits.visible) this.sound.play('button');
+      this.sound.play('button');
       this.LockLevel(1);
     });
     lvl2Btn.on('pointerup',()=>{
       this.lock.setPosition(lvl2Btn.x,lvl2Btn.y);
-      if(!this.credits.visible)this.sound.play('button');
+      this.sound.play('button');
       this.LockLevel(2);
     });
     lvl3Btn.on('pointerup',()=>{
       this.lock.setPosition(lvl3Btn.x,lvl3Btn.y);
-      if(!this.credits.visible)this.sound.play('button');
+      this.sound.play('button');
       this.LockLevel(3);
     });
     infoButton.on('pointerup',()=>{
-      if(!this.credits.visible)this.sound.play('button');
-      this.credits.visible = true;
-      menuButton.visible = true;
+      this.sound.play('button');
+      this.credits.setVisible(true);
+      menuButton.setVisible(true);
     });
     menuButton.on('pointerup',()=>{
       this.sound.play('button');
-      this.credits.visible = false;
-      menuButton.visible = false;
+      this.credits.setVisible(false);
+      menuButton.setVisible(false);
     });
     musicBtn.on('pointerup',()=>{
       this.sound.play('button');
