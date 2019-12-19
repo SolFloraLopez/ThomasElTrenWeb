@@ -154,6 +154,7 @@ export default class MainMenu extends Phaser.Scene {
     });
     tableBtn.on('pointerup',()=>{
       this.sound.play('button');
+      this.scene.pause(this);
       this.scene.launch('leaderboard');
     });
   }
