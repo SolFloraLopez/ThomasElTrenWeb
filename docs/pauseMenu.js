@@ -37,7 +37,6 @@ export default class PauseMenu extends Phaser.Scene {
     soundBtn.setInteractive();
 
 
-
     resumeButton.on('pointerup',()=>{
       this.sound.play('button');
       this.scene.resume('main');

@@ -67,7 +67,6 @@ export default class Game extends Phaser.Scene {
     this.music.setLoop(true);
     this.music.setVolume(0.2);
     this.music.play();
-    console.log(this.music);
     //INPUTS de teclado
     this.r = this.input.keyboard.addKey('R');
     this.esc = this.input.keyboard.addKey('ESC');
