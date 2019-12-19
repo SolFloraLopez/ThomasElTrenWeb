@@ -15,6 +15,7 @@ export default class PauseMenu extends Phaser.Scene {
 
   create()
   {
+    console.log(JSON.parse(localStorage.getItem('scoreboard')));
     this.scene.bringToTop(this);
     this.add.image(0,0,'pauseBG').setOrigin(0);
     let resumeButton = this.add.image(275,330,'resumeBtn').setOrigin(0);
