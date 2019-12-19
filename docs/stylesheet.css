@@ -61,40 +61,55 @@ p1 {
 }
 
 .btn-group button:not(:last-child) {
-  border-right: none; /* Prevent double borders */
+  border-right: none; 
 }
 
-/* Clear floats (clearfix hack) */
 .btn-group:after {
   content: "";
   clear: both;
   display: table;
 }
 
-/* Add a background color on hover */
 .btn-group button:hover {
   background-color: #3e8e41;
   color: white;
 }
 
 #myBtn {
-  position: fixed; /* Fixed/sticky position */
-  bottom: 2%; /* Place the button at the bottom of the page */
-  right: 1%; /* Place the button 30px from the right */
-  z-index: 99; /* Make sure it does not overlap */
+  position: fixed; 
+  bottom: 2%; 
+  right: 1%;
+  z-index: 99; 
   border-color: black;
-  outline: none; /* Remove outline */
-  background-color: red; /* Set a background color */
-  color: black; /* Text color */
-  cursor: pointer; /* Add a mouse pointer on hover */
-  padding: 0.75%; /* Some padding */
-  border-radius: 20px; /* Rounded corners */
-  font-size: 2em; /* Increase font size */
+  outline: none; 
+  background-color: red; 
+  color: black;
+  cursor: pointer;
+  padding: 0.75%;
+  border-radius: 20px; 
+  font-size: 2em; 
+}
+#saveBtn {
+  position: absolute;
+  left: 37%;
+  background-color: rgb(17, 59, 59); /* Green background */
+  border: 10px solid rgb(0, 0, 0); /* Green border */
+  color: rgb(255, 4, 4); /* White text */
+  padding: 0.5% 2%; /* Some padding */
+  cursor: pointer; /* Pointer/hand icon */
+  font-size: 4em;
+  border-radius: 10px;
 }
 
 #myBtn:hover {
-  background-color: #555; /* Add a dark-grey background on hover */
+  background-color: #555; 
 }
+
+#saveBtn:hover{
+  background-color: #3e8e41;
+  color: white;
+}
+
 #nokia{
   float:right;
   width:25%;
@@ -116,14 +131,14 @@ p1 {
 
 input[type=text]{
   font-size: 500%;
-  position: absolute;
-  left: -3%;
+  position: relative;
+  margin-left: 6%;
+  margin-top: 0%;
+  box-sizing: border-box;
   z-index: 1;
-  width:50%;
+  width:30%;
+  height: auto;
   border:10px solid rgb(0, 0, 0);
   border-radius:4px;
-  margin:20%;
   outline:none;
-  padding:0.5%;
-  box-sizing:border-box;
 }
