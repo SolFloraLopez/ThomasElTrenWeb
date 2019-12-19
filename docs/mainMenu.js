@@ -23,6 +23,7 @@ export default class MainMenu extends Phaser.Scene {
     this.load.image('musicOnBtn', 'img/musicOnBtn.png');
     this.load.image('soundOffBtn', 'img/soundOffBtn.png');
     this.load.image('soundOnBtn', 'img/soundOnBtn.png');
+    this.load.image('tableBtn', 'img/tableBtn.png');
     
     this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
     this.load.audio('buttonHover', ['soundFiles/buttonHoverSound.mp3', 'soundFiles/buttonHoverSound.ogg']);
@@ -56,10 +57,11 @@ export default class MainMenu extends Phaser.Scene {
     this.playLockedBtn = this.add.image(420,640,'playlockedBtn').setOrigin(0);
     let infoButton = this.add.image(1030,640,'infoBtn').setOrigin(0);
     let menuButton = this.add.image(415,580,'menuBtn').setOrigin(0);
-    let musicBtn =  this.add.image(100,650,'musicOffBtn').setOrigin(0);
-    this.add.image(100,650,'musicOnBtn').setOrigin(0);
-    let soundBtn =  this.add.image(250,650,'soundOnBtn').setOrigin(0);
-    this.add.image(250,650,'soundOffBtn').setOrigin(0);
+    let musicBtn =  this.add.image(40,660,'musicOffBtn').setOrigin(0);
+    this.add.image(40,660,'musicOnBtn').setOrigin(0);
+    let soundBtn =  this.add.image(160,660,'soundOnBtn').setOrigin(0);
+    this.add.image(160,660,'soundOffBtn').setOrigin(0);
+    let tableBtn =  this.add.image(280,660,'tableBtn').setOrigin(0);
 
     menuButton.visible = false;
 
@@ -80,6 +82,7 @@ export default class MainMenu extends Phaser.Scene {
     menuButton.setInteractive();
     musicBtn.setInteractive();
     soundBtn.setInteractive();
+    tableBtn.setInteractive();
 
     playButton.on('pointerup',()=>{
       this.sound.play('button');
@@ -148,6 +151,10 @@ export default class MainMenu extends Phaser.Scene {
         this.sound.setMute(false);
         soundBtn.setDepth(1);
       }
+    });
+    tableBtn.on('pointerup',()=>{
+      this.sound.play('button');
+      this.scene.launch('leaderboard');
     });
   }
 

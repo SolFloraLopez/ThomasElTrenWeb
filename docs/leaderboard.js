@@ -37,7 +37,12 @@ export default class EndMenu extends Phaser.Scene {
     menuButton.setInteractive();
 
     menuButton.on('pointerup',()=>{
-      this.BackToMenu();
+      this.inputText.parentNode.removeChild(this.inputText);
+      this.inputBtn.parentNode.removeChild(this.inputBtn);
+      this.sound.play('button');
+      this.scene.remove('main');
+      this.scene.start('menu');
+      this.scene.remove(this);
     });
 
     //Proceso de guardado en array de scoreboard
@@ -57,18 +62,20 @@ export default class EndMenu extends Phaser.Scene {
         localStorage.setItem('scoreboard', JSON.stringify(scoreBoard));
         }
 
-        this.BackToMenu();
+        this.inputText.parentNode.removeChild(this.inputText);
+        this.inputBtn.parentNode.removeChild(this.inputBtn);
+        this.sound.play('button');
+        this.scene.remove('main');
+        this.scene.start('menu');
+        this.scene.remove(this);
+
 
       }
 
      };
+
   }
-  BackToMenu(){
-    this.inputText.parentNode.removeChild(this.inputText);
-    this.inputBtn.parentNode.removeChild(this.inputBtn);
-    this.sound.play('button');
-    this.scene.remove('main');
-    this.scene.start('menu');
-    this.scene.remove(this);
+  preUpdate(){
   }
+  
 }
