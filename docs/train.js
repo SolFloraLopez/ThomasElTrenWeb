@@ -20,17 +20,17 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
 
     preUpdate(time,delta)
      {
-        this.Move(this.speed,time,delta);
+        this.Move(this.speed, delta);
         this.column = Math.floor(this.x / 50);
         this.row = Math.floor(this.y / 50);
     }
      
-    Move(amount,time,delta)
+    Move(amount, delta)
     {
         this.body.setVelocity(0);
         if(this.direction !== directionEnum.NONE){
-            if(this.direction === directionEnum.UP || this.direction === directionEnum.DOWN) this.body.setVelocityY(amount * delta * this.direction/2)
-            else this.body.setVelocityX(amount * delta * this.direction);
+            if(this.direction === directionEnum.UP || this.direction === directionEnum.DOWN) this.y += amount * delta / 1000 * this.direction / 2;
+            else this.x += amount * delta / 1000 * this.direction;
         }
 
     }

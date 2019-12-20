@@ -1,7 +1,7 @@
 
 export default class Wagon extends Phaser.Physics.Arcade.Sprite
 { 
-    constructor(scene,targetToFollow,spacer, wagonThreshold, column, row, texture, tileSize)
+    constructor(scene,targetToFollow,spacer, updateTime, column, row, texture, tileSize)
     {
         super(scene, (column * tileSize) + tileSize/2, (row * tileSize) + tileSize/2, texture);
         scene.add.existing(this);
@@ -12,8 +12,10 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         this.target = targetToFollow;
         this.spacer = spacer;
         this.counter = 0;
-        this.wagonThreshold = wagonThreshold;
+        //this.wagonThreshold = wagonThreshold;
         this.reduceSpacer = false;
+        this.updateTime = updateTime;
+        this.deltaCounter = 0;
 
         this.column = column;
         this.row = row;
@@ -29,24 +31,33 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         this.column = Math.floor(this.x / 50);
         this.row = Math.floor(this.y / 50);
 
-        let part = this.wagonPath.pop();
+        this.deltaCounter += delta / 1000;
 
-        if(!this.reduceSpacer)
+        while(this.deltaCounter >= this.updateTime)
         {
+            let part = this.wagonPath.pop();
+
             part.setTo(this.target.x, this.target.y);
             this.wagonPath.unshift(part);
-        } 
-        else if (this.counter > 0)
-        {
-            this.counter--;
-            if (this.counter <= 0 || this.wagonPath.length < this.wagonThreshold) this.reduceSpacer = false;
-        }
-        
-        if(this.x !== (this.wagonPath[this.wagonPath.length - 1]).x) this.angle = 90;
-        else if(this.y !== (this.wagonPath[this.wagonPath.length - 1]).y) this.angle = 0;
 
-        this.x = (this.wagonPath[this.wagonPath.length - 1]).x;
-        this.y = (this.wagonPath[this.wagonPath.length - 1]).y;
+            // if(!this.reduceSpacer)
+            // {
+                
+            // } 
+            // else if (this.counter > 0)
+            // {
+            //     this.counter--;
+            //     if (this.counter <= 0 || this.wagonPath.length < this.wagonThreshold) this.reduceSpacer = false;
+            // }
+            
+            if(this.x !== (this.wagonPath[this.wagonPath.length - 1]).x) this.angle = 90;
+            else if(this.y !== (this.wagonPath[this.wagonPath.length - 1]).y) this.angle = 0;
+    
+            this.x = (this.wagonPath[this.wagonPath.length - 1]).x;
+            this.y = (this.wagonPath[this.wagonPath.length - 1]).y;
+
+            this.deltaCounter -= this.updateTime;
+        }
         
     }
 
