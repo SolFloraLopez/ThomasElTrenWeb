@@ -1,9 +1,9 @@
 
 export default class Wagon extends Phaser.Physics.Arcade.Sprite
 { 
-    constructor(scene,targetToFollow,spacer, wagonThreshold, x, y, texture)
+    constructor(scene,targetToFollow,spacer, wagonThreshold, column, row, texture, tileSize)
     {
-        super(scene, x, y, texture);
+        super(scene, (column * tileSize) + tileSize/2, (row * tileSize) + tileSize/2, texture);
         scene.add.existing(this);
         scene.physics.add.existing(this);
         this.body.setSize(40,40);
@@ -15,10 +15,8 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         this.wagonThreshold = wagonThreshold;
         this.reduceSpacer = false;
 
-        this.column = Math.floor(this.x / 50);
-        this.row = Math.floor(this.y / 50);
-        // this.direction = direction;
-        // this.angle = this.direction * 90;
+        this.column = column;
+        this.row = row;
         this.setDepth(3);
         for (var i = 0; i <= this.spacer; i++)
         {

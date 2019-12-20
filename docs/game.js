@@ -91,9 +91,9 @@ export default class Game extends Phaser.Scene {
     this.waterGroup = this.physics.add.group();
 
     //inicia el tren
-    this.train = new Train(this, 11 * TILE_SIZE + TILE_SIZE / 2, 15 * TILE_SIZE + TILE_SIZE / 2, 'trainsprite', INITIAL_TRAIN_SPEED, directionEnum.UP);
+    this.train = new Train(this, 11, 15, 'trainsprite', TILE_SIZE, INITIAL_TRAIN_SPEED, directionEnum.UP);
     //inicia el primer vagon y el primer pasajero
-    this.wagonsPool[0] = new Wagon(this,this.train,this.wagonSpacer, this.minSpacer, 11 * TILE_SIZE + TILE_SIZE / 2, 16 * TILE_SIZE + TILE_SIZE / 2, 'wagonsprite');
+    this.wagonsPool[0] = new Wagon(this,this.train,this.wagonSpacer, this.minSpacer, 11, 16, 'wagonsprite',TILE_SIZE);
     let passenger = new Collectible(this, 11, 9, 'passengersprite',TILE_SIZE);
     //se añade el pasajero a su grupo de colisiones
     this.passengersGroup.add(passenger);
@@ -210,7 +210,7 @@ export default class Game extends Phaser.Scene {
 
   createWagon()
   {
-    this.wagonsPool[this.wagonsPool.length] = new Wagon(this,this.wagonsPool[this.wagonsPool.length-1],this.wagonSpacer,this.minSpacer,this.wagonsPool[this.wagonsPool.length-1].x,this.wagonsPool[this.wagonsPool.length-1].y,'wagonsprite');
+    this.wagonsPool[this.wagonsPool.length] = new Wagon(this,this.wagonsPool[this.wagonsPool.length-1],this.wagonSpacer,this.minSpacer,this.wagonsPool[this.wagonsPool.length-1].ReturnTile().column,this.wagonsPool[this.wagonsPool.length-1].ReturnTile().row,'wagonsprite', TILE_SIZE);
     this.wagonsGroup.add(this.wagonsPool[this.wagonsPool.length-1]);
   }
 
@@ -232,7 +232,7 @@ export default class Game extends Phaser.Scene {
     do{
        tile = {column: Math.floor(Math.random() * (COLUMNS-5)), row: Math.floor(Math.random() * ROWS)};
     }while(tile.column==11 && tile.row>=12);
-    let water = new Water(this, tile.column, tile.row, 'watersprite');
+    let water = new Water(this, tile.column, tile.row, 'watersprite', TILE_SIZE);
     this.waterGroup.add(water);
   }
 

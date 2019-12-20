@@ -1,36 +1,29 @@
-import {directionEnum, stateEnum } from './enums.js'
+import {directionEnum} from './enums.js'
 
 export default class Train extends Phaser.Physics.Arcade.Sprite
 { 
-    constructor(scene, x, y, texture, speed, direction)
+    constructor(scene, column, row, texture, tileSize, speed, direction)
     {
-        super(scene, x, y, texture);
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
+        super(scene, (column * tileSize) + tileSize/2, (row * tileSize) + tileSize/2, texture);
+        this.scene.add.existing(this);
+        this.scene.physics.add.existing(this);
         this.setCollideWorldBounds(false);
         this.body.setSize(40,40);
 
-        this.column = Math.floor(this.x / 50);
-        this.row = Math.floor(this.y / 50);
+        this.column = column;
+        this.row = row;
         this.direction = direction;
         this.angle = this.direction * 90;
         this.speed = speed;
-        this.state = stateEnum.ONTRACK;
         this.setDepth(3);
     }
 
     preUpdate(time,delta)
      {
-        if (this.state == stateEnum.ONTRACK) 
-        {
-            this.Move(this.speed,time,delta);
-            this.column = Math.floor(this.x / 50);
-            this.row = Math.floor(this.y / 50);
-        }
-        //console.table([{name: 'column', amount: this.column}, {name: 'row', amount: this.row}, {name: 'x', amount: this.x}, {name: 'y', amount: this.y}]);
+        this.Move(this.speed,time,delta);
+        this.column = Math.floor(this.x / 50);
+        this.row = Math.floor(this.y / 50);
     }
-
-
      
     Move(amount,time,delta)
     {
@@ -39,7 +32,6 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
             if(this.direction === directionEnum.UP || this.direction === directionEnum.DOWN) this.body.setVelocityY(amount * delta * this.direction/2)
             else this.body.setVelocityX(amount * delta * this.direction);
         }
-        
 
     }
     //dado un rail comprueba todos los casos de entrada que no son compatibles y la direccion que va a tomar tras cruzarlo, en caso de que sea compatible
@@ -85,8 +77,6 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
     ChangeDirection(direction)
     {
         this.direction = direction;
-        
-
         switch(direction)
         {
             case directionEnum.UP:
@@ -113,18 +103,12 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
     ReturnTile()
     {
         let tile = {column: this.column, row: this.row}
-
         return tile;
     }
 
     ReturnDirection()
     {
         return this.direction;
-    }
-
-    ChangeState(state) 
-    {
-        this.state = state;
     }
 
     ChangeSpeed(amount)
