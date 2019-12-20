@@ -1,17 +1,13 @@
-//Clase para el principal objeto tren
+import GameObject from './gameObject.js'
 import {directionEnum} from './Enums.js'
-export default class Train extends Phaser.Physics.Arcade.Sprite
+//Clase para el principal objeto tren
+export default class Train extends GameObject
 { 
     constructor(scene, column, row, texture, tileSize, speed, direction)
     {
-        super(scene, (column * tileSize) + tileSize/2, (row * tileSize) + tileSize/2, texture);
-        this.scene.add.existing(this);
-        this.scene.physics.add.existing(this);
-        this.setCollideWorldBounds(false);
+        super(scene, column, row, texture, tileSize);
         this.body.setSize(35,35);
 
-        this.column = column;
-        this.row = row;
         this.direction = direction;
         this.angle = this.direction * 90;
         this.speed = speed;
@@ -21,8 +17,7 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
     preUpdate(time,delta)
      {
         this.Move(this.speed, delta);
-        this.column = Math.floor(this.x / 50);
-        this.row = Math.floor(this.y / 50);
+        super.UpdateTilePos();
     }
      
     Move(amount, delta)
@@ -94,26 +89,14 @@ export default class Train extends Phaser.Physics.Arcade.Sprite
         }
     }
 
-    ReturnPos()
+    ChangeSpeed(amount)
     {
-       let pos = {x: this.x,  y: this.y};
-       return pos;
-    }
-
-    ReturnTile()
-    {
-        let tile = {column: this.column, row: this.row}
-        return tile;
+        this.speed = amount;
     }
 
     ReturnDirection()
     {
         return this.direction;
-    }
-
-    ChangeSpeed(amount)
-    {
-        this.speed = amount;
     }
 }
 

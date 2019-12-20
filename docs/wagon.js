@@ -1,11 +1,10 @@
-
-export default class Wagon extends Phaser.Physics.Arcade.Sprite
+import GameObject from './gameObject.js'
+//Clase para los vagones del juego
+export default class Wagon extends GameObject
 { 
     constructor(scene,targetToFollow,spacer, wagonThreshold, updateTime, column, row, texture, tileSize)
     {
-        super(scene, (column * tileSize) + tileSize/2, (row * tileSize) + tileSize/2, texture);
-        scene.add.existing(this);
-        scene.physics.add.existing(this);
+        super(scene, column, row, texture,tileSize);
         this.body.setSize(40,40);
 
         this.wagonPath=[];
@@ -17,10 +16,8 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         this.updateTime = updateTime;
         this.deltaCounter = 0;
 
-        this.column = column;
-        this.row = row;
         this.setDepth(3);
-        for (var i = 0; i <= this.spacer; i++)
+        for (let i = 0; i <= this.spacer; i++)
         {
           this.wagonPath[i] = new Phaser.Geom.Point(this.target.x, this.target.y);
         }
@@ -28,8 +25,7 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
 
     preUpdate(time,delta)
      {
-        this.column = Math.floor(this.x / 50);
-        this.row = Math.floor(this.y / 50);
+        super.UpdateTilePos();
 
         this.deltaCounter += delta / 1000;
 
@@ -58,12 +54,6 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
             this.deltaCounter -= this.updateTime;
         }
         
-    }
-
-    ReturnTile()
-    {
-        let tile = {column: this.column, row: this.row}
-        return tile;
     }
 
     updateCounter(amount)

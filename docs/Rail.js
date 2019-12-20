@@ -1,17 +1,14 @@
-
-export default class Rail extends Phaser.GameObjects.Sprite
+import GameObject from './gameObject.js'
+//Clase para los raíles
+export default class Rail extends GameObject
 {
     constructor(scene, column, row, texture, pointer, railType, tileSize,inventory)
     {
-        super(scene, (column * tileSize) + tileSize / 2, (row * tileSize) + tileSize / 2, texture);
-        this.scene.add.existing(this).setInteractive();
-        this.scene.physics.add.existing(this);
+        super(scene, column, row, texture, tileSize);
+        this.setInteractive();
         this.scene.input.setDraggable(this);
         this.setDepth(1);
         this.inventory = inventory;
-        this.tileSize = tileSize;
-        this.column = column;
-        this.row = row;
         this.railType = railType;
         this.pointer = pointer;
         this.rotatable = false;
@@ -133,8 +130,11 @@ export default class Rail extends Phaser.GameObjects.Sprite
     }
 
     UpdateLocation(){
-      this.column = Math.floor(this.x / this.tileSize);
-      this.row = Math.floor(this.y / this.tileSize);
+      super.UpdateTilePos();
+      this.UpdatePos();
+    }
+
+    UpdatePos(){
       this.x = (this.column * this.tileSize) + this.tileSize / 2;
       this.y = (this.row * this.tileSize) + this.tileSize / 2;
     }
@@ -151,26 +151,13 @@ export default class Rail extends Phaser.GameObjects.Sprite
         this.railType = 4;
       }
       this.row = 8;
-      this.x = (this.column * this.tileSize) + this.tileSize / 2;
-      this.y = (this.row * this.tileSize) + this.tileSize / 2;
+      this.UpdatePos();
       this.angle = 0;
-    }
-    
-    ReturnTile()
-    {
-        let tile = {column: this.column, row: this.row}
-        return tile;
     }
 
     ReturnRailType()
     {
         return this.railType;
-    }
-
-    ReturnPos()
-    {
-      let pos = {x: this.x,  y: this.y};
-      return pos;
     }
 
     onDrag(bool){
