@@ -5,7 +5,7 @@ import Collectible from './collectible.js'
 import Water from './water.js'
 import Inventory from './inventory.js'
 import EndMenu from './endMenu.js'
-import {directionEnum} from './enums.js'
+import {directionEnum} from './Enums.js'
 
 const TILE_SIZE = 50;
 const COLUMNS = 28;
