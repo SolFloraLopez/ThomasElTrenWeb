@@ -1,7 +1,7 @@
 
 export default class Wagon extends Phaser.Physics.Arcade.Sprite
 { 
-    constructor(scene,targetToFollow,spacer, updateTime, column, row, texture, tileSize)
+    constructor(scene,targetToFollow,spacer, wagonThreshold, updateTime, column, row, texture, tileSize)
     {
         super(scene, (column * tileSize) + tileSize/2, (row * tileSize) + tileSize/2, texture);
         scene.add.existing(this);
@@ -12,7 +12,7 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         this.target = targetToFollow;
         this.spacer = spacer;
         this.counter = 0;
-        //this.wagonThreshold = wagonThreshold;
+        this.wagonThreshold = wagonThreshold;
         this.reduceSpacer = false;
         this.updateTime = updateTime;
         this.deltaCounter = 0;
@@ -37,18 +37,17 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
         {
             let part = this.wagonPath.pop();
 
-            part.setTo(this.target.x, this.target.y);
-            this.wagonPath.unshift(part);
+            if(!this.reduceSpacer)
+            {
+                part.setTo(this.target.x, this.target.y);
+                this.wagonPath.unshift(part);
+            } 
 
-            // if(!this.reduceSpacer)
-            // {
-                
-            // } 
-            // else if (this.counter > 0)
-            // {
-            //     this.counter--;
-            //     if (this.counter <= 0 || this.wagonPath.length < this.wagonThreshold) this.reduceSpacer = false;
-            // }
+            else if (this.counter > 0)
+            {
+                this.counter--;
+                 if (this.counter <= 0 || this.wagonPath.length < this.wagonThreshold) this.reduceSpacer = false;
+            }
             
             if(this.x !== (this.wagonPath[this.wagonPath.length - 1]).x) this.angle = 90;
             else if(this.y !== (this.wagonPath[this.wagonPath.length - 1]).y) this.angle = 0;
