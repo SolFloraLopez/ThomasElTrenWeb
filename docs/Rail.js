@@ -74,18 +74,27 @@ export default class Rail extends Phaser.GameObjects.Sprite
             this.onDrag(false);
             //Para que no se pueda colocar raíles en obstáculos
             let overlapTemp = this.scene.physics.add.overlap(this,this.scene.backgroundLayer,(o1, o2) => {
-              if(o2.properties.collides) this.MoveToInventory();
+              if(o2.properties.collides){
+                if(o1.column<23) this.scene.sound.play('error');
+                this.MoveToInventory();
+              }
               overlapTemp.destroy();
             });
             //Para evitar que se coloquen raíles curvos en agua
             let overlapTemp2 = this.scene.physics.add.overlap(this,this.scene.waterGroup,(o1, o2) => {
-              if(this.railType<4) this.MoveToInventory();
+              if(this.railType<4){
+                this.scene.sound.play('error');
+                this.MoveToInventory();
+              } 
               overlapTemp2.destroy();
             });
 
             //Para evitar colocar un raíl encima de otro
             let overlapTemp3 = this.scene.physics.add.collider(this,this.scene.railsGroup,(o1,o2)=>{
-              if(o2.column<23) o2.MoveToInventory(); 
+              if(o2.column<23){
+                this.scene.sound.play('error');
+                o2.MoveToInventory(); 
+              } 
               if(overlapTemp3.world!=null)overlapTemp3.destroy();
             });
 

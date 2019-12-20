@@ -56,6 +56,7 @@ export default class Game extends Phaser.Scene {
     this.load.audio('pickBox', ['soundFiles/pickBox.mp3', 'soundFiles/pickBox.ogg']);
     this.load.audio('pickPassenger', ['soundFiles/pickPassenger.mp3', 'soundFiles/pickPassenger.ogg']);
     this.load.audio('rotateObject', ['soundFiles/rotateObject.mp3', 'soundFiles/rotateObject.ogg']);
+    this.load.audio('error', ['soundFiles/error.mp3', 'soundFiles/error.ogg']);
   }
 
   create()
