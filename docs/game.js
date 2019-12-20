@@ -186,8 +186,10 @@ export default class Game extends Phaser.Scene {
     this.physics.add.overlap(this.train, this.waterGroup, (o1,o2) => {
       if(!o2.avoidable) this.EndGame();
     });
-    this.physics.add.collider(this.train, this.backgroundLayer, () => {
+    this.physics.add.overlap(this.train, this.backgroundLayer, (o1,o2) => {
+      if(o2.collides){
       this.EndGame();
+      }
     });
     this.physics.add.overlap(this.train,this.railsGroup,(o1, o2) => {
       //comprueba si el rail es compatible con el tren, es decir, si puede entrar por ese lado del rail
