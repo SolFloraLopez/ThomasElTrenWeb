@@ -83,6 +83,12 @@ export default class Rail extends Phaser.GameObjects.Sprite
               overlapTemp2.destroy();
             });
 
+            //Para evitar colocar un raíl encima de otro
+            let overlapTemp3 = this.scene.physics.add.collider(this,this.scene.railsGroup,(o1,o2)=>{
+              if(o2.column<23) o2.MoveToInventory(); 
+              if(overlapTemp3.world!=null)overlapTemp3.destroy();
+            });
+
             //Si el raíl que se suelta es raíl puente, busca si debajo hay una casilla de agua para cambiarla a estado "avoidable" y que el tren pueda pasar
             if(this.railType>=4){
               let pointerPos = {column: Math.floor((pointer.x/50)),row:  Math.floor((pointer.y/50))};
