@@ -1,5 +1,8 @@
 import Game from './game.js'
 
+export function LoadScreen(params) {
+  
+}
 export default class MainMenu extends Phaser.Scene {
   constructor() {
     super({ key: 'menu' });
@@ -27,6 +30,7 @@ export default class MainMenu extends Phaser.Scene {
     this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
     this.load.audio('buttonHover', ['soundFiles/buttonHoverSound.mp3', 'soundFiles/buttonHoverSound.ogg']);
     this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
+
   }
 
   create()
@@ -155,6 +159,7 @@ export default class MainMenu extends Phaser.Scene {
       this.scene.pause(this);
       this.scene.launch('leaderboard');
     });
+
   }
 
   //Método para fijar nivel

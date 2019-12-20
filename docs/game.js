@@ -6,6 +6,7 @@ import Water from './water.js'
 import Inventory from './inventory.js'
 import EndMenu from './endMenu.js'
 import {directionEnum} from './enums.js'
+import LoadScreen from './mainMenu.js'
 
 const TILE_SIZE = 50;
 const COLUMNS = 28;
@@ -57,6 +58,9 @@ export default class Game extends Phaser.Scene {
     this.load.audio('pickPassenger', ['soundFiles/pickPassenger.mp3', 'soundFiles/pickPassenger.ogg']);
     this.load.audio('rotateObject', ['soundFiles/rotateObject.mp3', 'soundFiles/rotateObject.ogg']);
     this.load.audio('error', ['soundFiles/error.mp3', 'soundFiles/error.ogg']);
+
+    this.LoadScreen();
+
   }
 
   create()
@@ -391,6 +395,22 @@ export default class Game extends Phaser.Scene {
   }
   DestroyMusic(){
     this.music.destroy();
+  }
+  LoadScreen(){
+    let background = this.add.graphics({fillStyle: {color: '0x2e3673'}});
+
+    let percText = this.add.text(470, 100, '0%', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '160px', fill: '#00c4ef'});
+
+    let loadingBar = this.add.graphics({fillStyle: {color: '0x00c4ef'}});
+
+    this.load.on('start',(percent)=>{
+      background.fillRect(20,20,this.game.renderer.width*0.97,this.game.renderer.height*0.95);
+    });
+
+    this.load.on('progress',(percent)=>{
+      percText.setText(Math.round(percent*100)+'%');
+      loadingBar.fillRect(20,this.game.renderer.height/2,(this.game.renderer.width * percent)*0.97,200);
+    });
   }
 
 }
