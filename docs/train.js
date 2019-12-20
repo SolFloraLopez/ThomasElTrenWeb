@@ -1,5 +1,5 @@
 //Clase para el principal objeto tren
-import {directionEnum} from './enums.js'
+import {directionEnum} from './Enums.js'
 export default class Train extends Phaser.Physics.Arcade.Sprite
 { 
     constructor(scene, column, row, texture, tileSize, speed, direction)

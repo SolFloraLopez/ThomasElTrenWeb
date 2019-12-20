@@ -5,8 +5,7 @@ import Collectible from './collectible.js'
 import Water from './water.js'
 import Inventory from './inventory.js'
 import EndMenu from './endMenu.js'
-import {directionEnum} from './enums.js'
-import LoadScreen from './mainMenu.js'
+import {directionEnum} from './Enums.js'
 
 const TILE_SIZE = 50;
 const COLUMNS = 28;
@@ -39,6 +38,7 @@ export default class Game extends Phaser.Scene {
   {
     this.load.tilemapTiledJSON('tilemap'+this.level,'tilemaps/tilemap'+this.level+'.json');
     this.load.image('patronesTilemap'+this.level,'img/terrain'+this.level+'.png');
+    this.load.image('R','img/R.png');
     
     this.load.image('trainsprite', 'img/train.png', { frameWidth: 50, frameHeight: 50 });
     this.load.image('wagonsprite', 'img/wagon.png', { frameWidth: 50, frameHeight: 50 });
@@ -73,6 +73,7 @@ export default class Game extends Phaser.Scene {
     this.music.play();
     //INPUTS de teclado
     this.r = this.input.keyboard.addKey('R');
+    this.add.image(1320,340,'R').setDepth(1);
     this.esc = this.input.keyboard.addKey('ESC');
     //creación de mapa con tilemap
     this.map = this.make.tilemap({
@@ -87,7 +88,7 @@ export default class Game extends Phaser.Scene {
     this.backgroundLayer.setCollisionByProperty({collides: true});
 
     //se añade el texto de puntuación
-    this.scoreText = this.add.text(1155, 15, 'Puntos: 0', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '35px'});
+    this.scoreText = this.add.text(1155, 15, 'Puntos: 0', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '35px', fill: '#00c4ef'});
 
     //grupos para colisiones
     this.railsGroup = this.physics.add.group();
