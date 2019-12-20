@@ -1,4 +1,4 @@
-import {directionEnum, matrixEnum, stateEnum, } from './Enums.js'
+import {directionEnum, stateEnum } from './enums.js'
 
 export default class Train extends Phaser.Physics.Arcade.Sprite
 { 

@@ -2,7 +2,6 @@
 export default class PauseMenu extends Phaser.Scene {
   constructor() {
     super({ key: 'pause' });
-    
   }
 
   preload()
@@ -10,14 +9,14 @@ export default class PauseMenu extends Phaser.Scene {
     this.load.image('pauseBG', 'img/PauseBG.png');
     this.load.image('resumeBtn', 'img/ResumeBtn.png');
     this.load.image('mainMenuBtn', 'img/MainMenuBtn.png');
-
   }
 
   create()
   {
-    console.log(JSON.parse(localStorage.getItem('scoreboard')));
     this.scene.bringToTop(this);
     this.add.image(0,0,'pauseBG').setOrigin(0);
+
+    //Botones de pausa
     let resumeButton = this.add.image(275,330,'resumeBtn').setOrigin(0);
     let menuButton = this.add.image(275,510,'mainMenuBtn').setOrigin(0);
     let musicBtn =  this.add.image(120,420,'musicOffBtn').setOrigin(0);
@@ -37,7 +36,7 @@ export default class PauseMenu extends Phaser.Scene {
     musicBtn.setInteractive();
     soundBtn.setInteractive();
 
-
+    //Acciones de los botones
     resumeButton.on('pointerup',()=>{
       this.sound.play('button');
       this.scene.resume('main');

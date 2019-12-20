@@ -1,11 +1,11 @@
-import EndMenu from './endMenu.js'
 import Train from './train.js'
+import Wagon from './wagon.js'
 import Rail from './Rail.js'
 import Collectible from './collectible.js'
 import Water from './water.js'
-import Wagon from './wagon.js'
 import Inventory from './inventory.js'
-import {directionEnum} from './Enums.js'
+import EndMenu from './endMenu.js'
+import {directionEnum} from './enums.js'
 
 const TILE_SIZE = 50;
 const COLUMNS = 28;
@@ -35,12 +35,8 @@ export default class Game extends Phaser.Scene {
 
   preload()
   {
-    this.load.tilemapTiledJSON('tilemap1','tilemaps/tilemap1.json');
-    this.load.tilemapTiledJSON('tilemap2','tilemaps/tilemap2.json');
-    this.load.tilemapTiledJSON('tilemap3','tilemaps/tilemap3.json');
-    this.load.image('patronesTilemap1','img/terrain1.png');
-    this.load.image('patronesTilemap2','img/terrain2.png');
-    this.load.image('patronesTilemap3','img/terrain3.png');
+    this.load.tilemapTiledJSON('tilemap'+this.level,'tilemaps/tilemap'+this.level+'.json');
+    this.load.image('patronesTilemap'+this.level,'img/terrain'+this.level+'.png');
     
     this.load.image('trainsprite', 'img/train.png', { frameWidth: 50, frameHeight: 50 });
     this.load.image('wagonsprite', 'img/wagon.png', { frameWidth: 50, frameHeight: 50 });
@@ -53,6 +49,7 @@ export default class Game extends Phaser.Scene {
     this.load.image('boxsprite', 'img/box.png', { frameWidth: 50, frameHeight: 50 });
     this.load.image('watersprite', 'img/water.png', { frameWidth: 50, frameHeight: 50 });
     
+    this.load.audio('music'+this.level, ['soundFiles/music'+this.level+'.mp3', 'soundFiles/music'+this.level+'.ogg']);
     this.load.audio('crashSound', ['soundFiles/crashSound.mp3', 'soundFiles/crashSound.ogg']);
     this.load.audio('dragObject', ['soundFiles/dragObject.mp3', 'soundFiles/dragObject.ogg']);
     this.load.audio('dropObject', ['soundFiles/dropObject.mp3', 'soundFiles/dropObject.ogg']);
@@ -63,6 +60,7 @@ export default class Game extends Phaser.Scene {
 
   create()
   {
+    //música de nivel
     this.music = this.sound.add('music'+this.level);
     this.music.setLoop(true);
     this.music.setVolume(0.2);
@@ -79,21 +77,13 @@ export default class Game extends Phaser.Scene {
     this.map.addTilesetImage('terrain'+this.level,'patronesTilemap'+this.level);
     //crea capa con tileset "terrain" de nivel correspondiente
     this.backgroundLayer = this.map.createStaticLayer('Background','terrain'+this.level);
-    //se añade colision a las partes que tengan atributo collides == true
+    //se añade colision a las partes que tengan atributo collides === true
     this.backgroundLayer.setCollisionByProperty({collides: true});
 
     //se añade el texto de puntuación
     this.scoreText = this.add.text(1155, 15, 'Puntos: 0', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '35px'});
-    
-    //para ver la caja de colisiones del layer
-    // const debugGraphics = this.add.graphics().setAlpha(0.75);
-    // this.backgroundLayer.renderDebug(debugGraphics, {
-    // tileColor: null, // Color of non-colliding tiles
-    // collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-    // faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-    // });
 
-    //grupos de colisiones
+    //grupos para colisiones
     this.railsGroup = this.physics.add.group();
     this.wagonsGroup = this.physics.add.group();
     this.passengersGroup = this.physics.add.group();
@@ -104,7 +94,7 @@ export default class Game extends Phaser.Scene {
     this.train = new Train(this, 11 * TILE_SIZE + TILE_SIZE / 2, 15 * TILE_SIZE + TILE_SIZE / 2, 'trainsprite', INITIAL_TRAIN_SPEED, directionEnum.UP);
     //inicia el primer vagon y el primer pasajero
     this.wagonsPool[0] = new Wagon(this,this.train,this.wagonSpacer, this.minSpacer, 11 * TILE_SIZE + TILE_SIZE / 2, 16 * TILE_SIZE + TILE_SIZE / 2, 'wagonsprite');
-    let passenger = new Collectible(this, 11, 9, 'passengersprite');
+    let passenger = new Collectible(this, 11, 9, 'passengersprite',TILE_SIZE);
     //se añade el pasajero a su grupo de colisiones
     this.passengersGroup.add(passenger);
 
@@ -227,14 +217,14 @@ export default class Game extends Phaser.Scene {
   createPassenger()
   {
     let tile = {column: Math.floor(Math.random() * (COLUMNS-5)), row: Math.floor(Math.random() * ROWS)};
-    this.passenger = new Collectible(this, tile.column, tile.row, 'passengersprite');
+    this.passenger = new Collectible(this, tile.column, tile.row, 'passengersprite', TILE_SIZE);
     this.passengersGroup.add(this.passenger);
   }
   createBox()
   {
     let tile = {column: Math.floor(Math.random() * (COLUMNS-5)), row: Math.floor(Math.random() * ROWS)};
-    this.box = new Collectible(this, tile.column, tile.row, 'boxsprite');
-    this.boxsGroup.add(this.box);
+    let box = new Collectible(this, tile.column, tile.row, 'boxsprite', TILE_SIZE);
+    this.boxsGroup.add(box);
   }
   createWater(){
     let tile;
@@ -242,8 +232,8 @@ export default class Game extends Phaser.Scene {
     do{
        tile = {column: Math.floor(Math.random() * (COLUMNS-5)), row: Math.floor(Math.random() * ROWS)};
     }while(tile.column==11 && tile.row>=12);
-    this.water = new Water(this, tile.column, tile.row, 'watersprite');
-    this.waterGroup.add(this.water);
+    let water = new Water(this, tile.column, tile.row, 'watersprite');
+    this.waterGroup.add(water);
   }
 
   changeTrainSpeed()
@@ -274,11 +264,10 @@ export default class Game extends Phaser.Scene {
       this.railsPool[this.railsPool.length] = rail;
       this.railsGroup.add(rail);
     }
-    
   }
 
   CheckRails(){
-    let counters={curvedRails:0,straightRails:0};
+    let counters = {curvedRails:0,straightRails:0};
     for(let i = 0; i < this.railsPool.length; i++)
     {
       let tile = this.railsPool[i].ReturnTile();
@@ -360,11 +349,13 @@ export default class Game extends Phaser.Scene {
     }
   }
 
+  //Método para comprobar si el tren sale del mapa
   Exit(){
     let pos;
     pos = this.train.ReturnPos();
     if(pos.x < TILE_SIZE/3 || pos.y < TILE_SIZE/3 || pos.y > (TILE_SIZE * ROWS)-TILE_SIZE/3) return true;
   }
+  //Busca si hay agua en la posición del cursor
   SearchWater(pointerPos){
     let waterArray = this.waterGroup.getChildren();
     let found = false;
@@ -379,6 +370,7 @@ export default class Game extends Phaser.Scene {
     return returnObject;
 
   }
+  //Termina el juego
   EndGame(){
     this.sound.play('crashSound');
     this.music.stop();

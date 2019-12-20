@@ -1,4 +1,3 @@
-import {directionEnum, matrixEnum, stateEnum, } from './Enums.js'
 
 export default class Wagon extends Phaser.Physics.Arcade.Sprite
 { 
