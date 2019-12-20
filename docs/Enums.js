@@ -5,9 +5,3 @@ export let directionEnum = {
     RIGHT: 1,
     DOWN: 2,
  };
-
- export let stateEnum = {
-   ONTRACK: 0,
-   CRASHED: 1,
-   PAUSE: 2,
-};

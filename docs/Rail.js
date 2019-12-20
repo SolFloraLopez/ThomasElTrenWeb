@@ -1,5 +1,3 @@
-import {stateEnum} from './enums.js'
-import Inventory from './inventory.js';
 
 export default class Rail extends Phaser.GameObjects.Sprite
 {

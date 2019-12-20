@@ -1,4 +1,4 @@
-
+//Clase para el agua del nivel
 export default class Water extends Phaser.Physics.Arcade.Sprite{
     constructor(scene, column, row, texture, tileSize)
     {

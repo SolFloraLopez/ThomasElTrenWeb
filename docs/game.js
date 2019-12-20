@@ -210,7 +210,8 @@ export default class Game extends Phaser.Scene {
 
   createWagon()
   {
-    this.wagonsPool[this.wagonsPool.length] = new Wagon(this,this.wagonsPool[this.wagonsPool.length-1],this.wagonSpacer,this.minSpacer,this.wagonsPool[this.wagonsPool.length-1].ReturnTile().column,this.wagonsPool[this.wagonsPool.length-1].ReturnTile().row,'wagonsprite', TILE_SIZE);
+    let tile = this.wagonsPool[this.wagonsPool.length-1].ReturnTile();
+    this.wagonsPool[this.wagonsPool.length] = new Wagon(this,this.wagonsPool[this.wagonsPool.length-1],this.wagonSpacer,this.minSpacer,tile.column,tile.row,'wagonsprite', TILE_SIZE);
     this.wagonsGroup.add(this.wagonsPool[this.wagonsPool.length-1]);
   }
 

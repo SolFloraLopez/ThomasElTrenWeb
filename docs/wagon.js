@@ -53,7 +53,6 @@ export default class Wagon extends Phaser.Physics.Arcade.Sprite
     ReturnTile()
     {
         let tile = {column: this.column, row: this.row}
-
         return tile;
     }
 
