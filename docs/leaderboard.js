@@ -1,3 +1,4 @@
+//Clase para la tabla de puntuación
 const SEPARATION = 43;
 export default class Leaderboard extends Phaser.Scene {
   constructor(score) {
@@ -6,10 +7,8 @@ export default class Leaderboard extends Phaser.Scene {
 
   preload()
   {
-
     this.load.image('leaderboardBG', 'img/leaderboardBG.png');
     this.load.image('backBtn', 'img/backBtn.png');
-
   }
 
   create()
@@ -17,7 +16,7 @@ export default class Leaderboard extends Phaser.Scene {
     this.scene.bringToTop(this);
     this.add.image(0,0,'leaderboardBG').setOrigin(0);
 
-    //Uso del DOM
+    //Se obtiene el array guardado
     let scoreboard = JSON.parse(localStorage.getItem('scoreboard'));
 
    if(scoreboard!=null){
@@ -30,6 +29,7 @@ export default class Leaderboard extends Phaser.Scene {
      }
     }
  
+    //Botón para volver al menú
     let backBtn = this.add.image(1175,610,'backBtn').setOrigin(0);
     
     backBtn.setInteractive();

@@ -6,15 +6,6 @@ export let directionEnum = {
     DOWN: 2,
  };
 
- export let matrixEnum = {
-    EMPTY: 0,
-    RAIL: 1,
-    CURVE: 2,
-    PASSENGER: 3,
-    AVOIDABLE: 4,
-    UNAVOIDABLE: 5,
- };
-
  export let stateEnum = {
    ONTRACK: 0,
    CRASHED: 1,

@@ -1,6 +1,5 @@
 import Game from './game.js'
 
-
 export default class MainMenu extends Phaser.Scene {
   constructor() {
     super({ key: 'menu' });
@@ -28,63 +27,62 @@ export default class MainMenu extends Phaser.Scene {
     this.load.audio('button', ['soundFiles/buttonSound.mp3', 'soundFiles/buttonSound.ogg']);
     this.load.audio('buttonHover', ['soundFiles/buttonHoverSound.mp3', 'soundFiles/buttonHoverSound.ogg']);
     this.load.audio('music', ['soundFiles/music.mp3', 'soundFiles/music.ogg']);
-    this.load.audio('music1', ['soundFiles/music1.mp3', 'soundFiles/music1.ogg']);
-    this.load.audio('music2', ['soundFiles/music2.mp3', 'soundFiles/music2.ogg']);
-    this.load.audio('music3', ['soundFiles/music3.mp3', 'soundFiles/music3.ogg']);
   }
 
   create()
   {
-
-    this.add.image(0,0,'menuBG').setOrigin(0);
-    let lvl1Btn =  this.add.image(130,310,'level1').setOrigin(0);
-    let lvl2Btn =  this.add.image(540,310,'level2').setOrigin(0);
-    let lvl3Btn =  this.add.image(950,310,'level3').setOrigin(0);
-    let framW = this.add.image(130,310,'fW').setOrigin(0);
-    this.lock = this.add.image(130,310,'lock').setOrigin(0);
-    this.credits = this.add.image(0,0,'credits').setOrigin(0);
-
-    this.lock.visible = false;
-    this.levelSelected=0;
-
     this.music = this.sound.add('music');
     this.music.setLoop(true);
     this.music.setVolume(0.2);
     this.music.play();
 
+    this.levelSelected=0;
 
-    let playButton = this.add.image(420,640,'playBtn').setOrigin(0);
+    this.add.image(0,0,'menuBG').setOrigin(0);
+
+    //Botones del menú
+    let lvl1Btn =  this.add.image(130,310,'level1').setOrigin(0);
+    let lvl2Btn =  this.add.image(540,310,'level2').setOrigin(0);
+    let lvl3Btn =  this.add.image(950,310,'level3').setOrigin(0);
+    let playBtn = this.add.image(420,640,'playBtn').setOrigin(0);
     this.playLockedBtn = this.add.image(420,640,'playlockedBtn').setOrigin(0);
-    let infoButton = this.add.image(1030,640,'infoBtn').setOrigin(0);
-    let menuButton = this.add.image(415,580,'menuBtn').setOrigin(0);
+    let infoBtn = this.add.image(1030,640,'infoBtn').setOrigin(0);
+    let menuBtn = this.add.image(415,580,'menuBtn').setOrigin(0);
     let musicBtn =  this.add.image(40,660,'musicOffBtn').setOrigin(0);
     this.add.image(40,660,'musicOnBtn').setOrigin(0);
     let soundBtn =  this.add.image(160,660,'soundOnBtn').setOrigin(0);
     this.add.image(160,660,'soundOffBtn').setOrigin(0);
     let tableBtn =  this.add.image(280,660,'tableBtn').setOrigin(0);
 
-    menuButton.visible = false;
+    //Marcos para elegir nivel
+    let framW = this.add.image(130,310,'fW').setOrigin(0);
+    this.lock = this.add.image(130,310,'lock').setOrigin(0);
+    this.lock.visible = false;
 
+    //Imagen de los créditos
+    this.credits = this.add.image(0,0,'credits').setOrigin(0);
     this.credits.setDepth(2);
-    menuButton.setDepth(2);
+    this.credits.setVisible(false);
+    menuBtn.setVisible(false);
+    menuBtn.setDepth(3);
+
     if(this.sound.mute) soundBtn.setDepth(-1);
     else soundBtn.setDepth(1);
     musicBtn.setDepth(-1);
 
-
-    this.credits.setVisible(false);
     this.credits.setInteractive();
-    playButton.setInteractive();
+    playBtn.setInteractive();
     lvl1Btn.setInteractive();
     lvl2Btn.setInteractive();
     lvl3Btn.setInteractive();
-    infoButton.setInteractive();
-    menuButton.setInteractive();
+    infoBtn.setInteractive();
+    menuBtn.setInteractive();
     musicBtn.setInteractive();
     soundBtn.setInteractive();
     tableBtn.setInteractive();
 
-    playButton.on('pointerup',()=>{
+    //Acciones de botones
+    playBtn.on('pointerup',()=>{
       this.sound.play('button');
       if(this.levelSelected!=0 && !this.credits.visible){
         this.music.destroy();
@@ -120,15 +118,15 @@ export default class MainMenu extends Phaser.Scene {
       this.sound.play('button');
       this.LockLevel(3);
     });
-    infoButton.on('pointerup',()=>{
+    infoBtn.on('pointerup',()=>{
       this.sound.play('button');
       this.credits.setVisible(true);
-      menuButton.setVisible(true);
+      menuBtn.setVisible(true);
     });
-    menuButton.on('pointerup',()=>{
+    menuBtn.on('pointerup',()=>{
       this.sound.play('button');
       this.credits.setVisible(false);
-      menuButton.setVisible(false);
+      menuBtn.setVisible(false);
     });
     musicBtn.on('pointerup',()=>{
       this.sound.play('button');
@@ -159,6 +157,7 @@ export default class MainMenu extends Phaser.Scene {
     });
   }
 
+  //Método para fijar nivel
   LockLevel(level){
     this.levelSelected = level;
     this.lock.visible = true;

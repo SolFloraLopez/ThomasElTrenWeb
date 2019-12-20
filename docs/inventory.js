@@ -1,10 +1,8 @@
- import {directionEnum, matrixEnum} from './Enums.js'
-
+//Clase para el inventario
 export default class Inventory extends Phaser.GameObjects.GameObject {
     constructor(scene,railCounter)
     {
         super(scene);
-        scene.add.existing(this);
         this.railCounter = railCounter;
         this.railBCounter = 3;
         let num = this.railCounter-1;
@@ -12,7 +10,7 @@ export default class Inventory extends Phaser.GameObjects.GameObject {
         this.railCounterText = this.scene.add.text(1155, 90, 'Raíles: '+ num, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '28px'});
         this.railBCounterText = this.scene.add.text(1155, 150, 'Raíles puente: '+ numB, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '27px'});
     }
-    
+    //Métodos para actualizar el texto de contadores
     UpdateRailCounterText(){
         let num = this.railCounter-1;
         if(num<0) num =0;
@@ -27,6 +25,7 @@ export default class Inventory extends Phaser.GameObjects.GameObject {
         else this.railBCounterText.setFill('#ffffff');
     this.railBCounterText.setText('Raíles puente: '+ numB);
     }
+    //Modifica el contador especificado
     ModifyRailCounter(num,counter)
     {
         if(counter==='A'){

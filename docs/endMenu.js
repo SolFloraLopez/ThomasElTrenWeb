@@ -1,4 +1,4 @@
-
+//Clase para la escena de final de juego
 export default class EndMenu extends Phaser.Scene {
   constructor(score) {
     super({ key: 'end' });
@@ -16,6 +16,7 @@ export default class EndMenu extends Phaser.Scene {
   create()
   {
     this.scene.bringToTop(this);
+
     this.add.image(0,0,'endBG').setOrigin(0);
     this.add.text(110, 230, 'Puntos: '+this.score, { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '140px',fill: '#00c2eb'});
     this.add.text(185, 380, '🡇    Guarda tu récord    🡇 \n🡇    al final de la web    🡇', { fontFamily: 'Verdana, "Times New Roman", Tahoma, serif' ,fontSize: '60px',fill: '#000000'});
@@ -56,13 +57,11 @@ export default class EndMenu extends Phaser.Scene {
         scoreBoard.splice(i,0,{name: this.inputText.value,score: this.score});
         localStorage.setItem('scoreboard', JSON.stringify(scoreBoard));
         }
-
         this.BackToMenu();
-
       }
-
      };
   }
+  //Método para volver al menú
   BackToMenu(){
     this.inputText.parentNode.removeChild(this.inputText);
     this.inputBtn.parentNode.removeChild(this.inputBtn);
