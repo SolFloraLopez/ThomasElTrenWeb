@@ -11,8 +11,8 @@ const TILE_SIZE = 50;
 const COLUMNS = 28;
 const ROWS = 16;
 const TOTAL_RAILS = 12;
-const INITIAL_TRAIN_SPEED = 80;
-const SPEED_INCREASE = 8;
+const INITIAL_TRAIN_SPEED = 30;
+const SPEED_INCREASE = 4;
 const WATER_SLOTS = 7;
 
 export default class Game extends Phaser.Scene {
@@ -26,7 +26,6 @@ export default class Game extends Phaser.Scene {
     this.inventory;
 
     this.railsPool = [];
-    this.aestheticRails = [];
     this.wagonsPool = [];
 
     this.wagonSpacer = 160;
@@ -214,7 +213,6 @@ export default class Game extends Phaser.Scene {
   update()
   {
     if(this.Exit()) this.EndGame();
-    this.CheckAestheticRails();
   }
 
   createWagon()
@@ -285,78 +283,6 @@ export default class Game extends Phaser.Scene {
       else if(this.railsPool[i].ReturnRailType()===4 && tile.column === 26){counters.straightRails++;}
     }
     return counters;
-  }
-
-  CheckAestheticRails()
-  {
-    let flag = false;
-    let aestheticRailTile;
-    let trainHeadTile = this.train.ReturnTile();
-
-    this.AestheticRailsCreation(flag, aestheticRailTile, trainHeadTile);
-
-    flag = false;
-    aestheticRailTile = {column: Math.floor(this.aestheticRails[0].getCenter().x / TILE_SIZE), row: Math.floor(this.aestheticRails[0].getCenter().y / TILE_SIZE) }
-    this.AestheticRailsDestruction(flag, aestheticRailTile, trainHeadTile);
-  }
-
-  AestheticRailsCreation(flag, aestheticRailTile, trainHeadTile)
-  {
-    let i = 0;
-    let trainHeadDir = this.train.ReturnDirection();
-
-    if(this.aestheticRails.length > 0) 
-    {   
-      aestheticRailTile = {column: Math.floor(this.aestheticRails[this.aestheticRails.length - 1].getCenter().x / TILE_SIZE), 
-      row: Math.floor(this.aestheticRails[this.aestheticRails.length - 1].getCenter().y / TILE_SIZE) }
-
-      if (aestheticRailTile.column === trainHeadTile.column && aestheticRailTile.row === trainHeadTile.row) flag = true;
-
-      while(!flag && i < this.railsPool.length) 
-      {
-        let curvedRailTile = this.railsPool[i].ReturnTile();
-        if (aestheticRailTile.column === curvedRailTile.column && aestheticRailTile.row === curvedRailTile.row) flag = true;
-        i++;
-      }
-    }
-
-    if(!flag)
-    {
-      this.aestheticRails[this.aestheticRails.length] = this.add.sprite(trainHeadTile.column * TILE_SIZE + TILE_SIZE / 2, trainHeadTile.row * TILE_SIZE + TILE_SIZE / 2, 'railsprite');
-      if(trainHeadDir % 2 !== 0) this.aestheticRails[this.aestheticRails.length - 1].setAngle(90);
-    } 
-  }
-
-  AestheticRailsDestruction(flag, aestheticRailTile, trainHeadTile)
-  {
-    let i = 1;
-
-    while(!flag && i < this.wagonsPool.length) 
-    {
-      trainHeadTile = this.wagonsPool[i].ReturnTile();
-      if (aestheticRailTile.column === trainHeadTile.column && aestheticRailTile.row === trainHeadTile.row) flag = true;
-      i++;
-    }
-
-    if(!flag)
-    {
-      this.aestheticRails[0].destroy();
-      this.aestheticRails.shift();
-    }
-
-    i = 0;
-    
-    while(flag && i < this.railsPool.length) 
-    {
-      let curvedRailTile = this.railsPool[i].ReturnTile();
-      if (aestheticRailTile.column === curvedRailTile.column && aestheticRailTile.row === curvedRailTile.row)
-      {
-        this.aestheticRails[0].destroy();
-        this.aestheticRails.shift();
-        flag = false;
-      }
-      i++;
-    }
   }
 
   //Método para comprobar si el tren sale del mapa
