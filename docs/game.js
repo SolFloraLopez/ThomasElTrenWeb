@@ -29,7 +29,6 @@ export default class Game extends Phaser.Scene {
     this.wagonsPool = [];
 
     this.wagonSpacer = 160;
-    this.minSpacer = 10;
     this.spacerUpdateTime = 0.01;
   }
 
@@ -99,7 +98,7 @@ export default class Game extends Phaser.Scene {
     //inicia el tren
     this.train = new Train(this, 11, 15, 'trainsprite', TILE_SIZE, INITIAL_TRAIN_SPEED, directionEnum.UP);
     //inicia el primer vagon y el primer pasajero
-    this.wagonsPool[0] = new Wagon(this,this.train, this.wagonSpacer, this.minSpacer, this.spacerUpdateTime, 11, 16, 'wagonsprite',TILE_SIZE);
+    this.wagonsPool[0] = new Wagon(this,this.train, this.wagonSpacer, this.spacerUpdateTime, 11, 16, 'wagonsprite',TILE_SIZE);
     let passenger = new Collectible(this, 11, 9, 'passengersprite',TILE_SIZE);
     //se añade el pasajero a su grupo de colisiones
     this.passengersGroup.add(passenger);
@@ -218,7 +217,7 @@ export default class Game extends Phaser.Scene {
   createWagon()
   {
     let tile = this.wagonsPool[this.wagonsPool.length-1].ReturnTile();
-    this.wagonsPool[this.wagonsPool.length] = new Wagon(this,this.wagonsPool[this.wagonsPool.length-1],this.wagonSpacer, this.minSpacer, this.spacerUpdateTime, tile.column,tile.row,'wagonsprite', TILE_SIZE);
+    this.wagonsPool[this.wagonsPool.length] = new Wagon(this,this.wagonsPool[this.wagonsPool.length-1],this.wagonSpacer, this.spacerUpdateTime, tile.column,tile.row,'wagonsprite', TILE_SIZE);
     this.wagonsGroup.add(this.wagonsPool[this.wagonsPool.length-1]);
   }
 
@@ -248,18 +247,7 @@ export default class Game extends Phaser.Scene {
   {
     this.train.ChangeSpeed(this.trainCurrentSpeed);
   }
-
-  // changeWagonSpacer()
-  // {
-  //   this.wagonSpacer -= SPEED_INCREASE * 10;
-  //   if(this.wagonSpacer < this.minSpacer) this.wagonSpacer = this.minSpacer;
-
-  //   for(let i = 0; i < this.wagonsPool.length; i++)
-  //   {
-  //     this.wagonsPool[i].updateCounter(SPEED_INCREASE * 10);
-  //   }
-  // }
-  //si quedan 2 railes de un tipo en el inventario, genera nuevos.
+  
   CreateRail(){
     let counters = this.CheckRails();
     if(counters.curvedRails<=1){
